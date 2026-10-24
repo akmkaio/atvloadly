@@ -7,7 +7,7 @@ on:
       - master
       - main
     paths:
-      - "homeassistant/atvloadly/**"
+      - "atvloadly/**"
       - ".github/workflows/build-ha-addon.yml"
 
 permissions:
@@ -29,9 +29,9 @@ jobs:
         id: addon
         shell: bash
         run: |
-          VERSION="$(sed -n 's/^version:[[:space:]]*"\([^"]*\)".*/\1/p' homeassistant/atvloadly/config.yaml)"
+          VERSION="$(sed -n 's/^version:[[:space:]]*"\([^"]*\)".*/\1/p' atvloadly/config.yaml)"
           if [ -z "$VERSION" ]; then
-            echo "Could not read version from homeassistant/atvloadly/config.yaml" >&2
+            echo "Could not read version from atvloadly/config.yaml" >&2
             exit 1
           fi
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
@@ -50,8 +50,8 @@ jobs:
       - name: Build and publish amd64 image
         uses: docker/build-push-action@v6
         with:
-          context: homeassistant/atvloadly
-          file: homeassistant/atvloadly/Dockerfile
+          context: atvloadly
+          file: atvloadly/Dockerfile
           platforms: linux/amd64
           push: true
           tags: |
