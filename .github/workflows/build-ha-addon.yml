@@ -1,0 +1,63 @@
+name: Build and publish Home Assistant add-on image
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+      - main
+    paths:
+      - "homeassistant/atvloadly/**"
+      - ".github/workflows/build-ha-addon.yml"
+
+permissions:
+  contents: read
+  packages: write
+
+concurrency:
+  group: build-ha-addon-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Read add-on version
+        id: addon
+        shell: bash
+        run: |
+          VERSION="$(sed -n 's/^version:[[:space:]]*"\([^"]*\)".*/\1/p' homeassistant/atvloadly/config.yaml)"
+          if [ -z "$VERSION" ]; then
+            echo "Could not read version from homeassistant/atvloadly/config.yaml" >&2
+            exit 1
+          fi
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "Building atvloadly HA add-on version $VERSION"
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and publish amd64 image
+        uses: docker/build-push-action@v6
+        with:
+          context: homeassistant/atvloadly
+          file: homeassistant/atvloadly/Dockerfile
+          platforms: linux/amd64
+          push: true
+          tags: |
+            ghcr.io/akmkaio/atvloadly-ha:${{ steps.addon.outputs.version }}
+            ghcr.io/akmkaio/atvloadly-ha:latest
+          labels: |
+            org.opencontainers.image.title=atvloadly Home Assistant add-on
+            org.opencontainers.image.source=https://github.com/akmkaio/atvloadly
+            org.opencontainers.image.licenses=AGPL-3.0
