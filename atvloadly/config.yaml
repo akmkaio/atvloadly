@@ -9,8 +9,7 @@ startup: services
 boot: auto
 init: false
 host_network: true
-ingress: true
-ingress_port: 5533
+ingress: false
 webui: "http://[HOST]:[PORT:5533]"
 panel_icon: mdi:apple-tv
 panel_title: "atvloadly"
