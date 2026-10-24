@@ -1,0 +1,23 @@
+name: "atvloadly"
+slug: "atvloadly_ha"
+version: "0.1.0"
+description: "Sideload and automatically refresh apps on Apple TV"
+url: "https://github.com/akmkaio/atvloadly"
+arch:
+  - amd64
+startup: services
+boot: auto
+init: false
+host_network: true
+ingress: true
+ingress_port: 5533
+webui: "http://[HOST]:5533"
+panel_icon: mdi:apple-tv
+panel_title: "atvloadly"
+image: ghcr.io/akmkaio/atvloadly-ha
+environment:
+  SERVICE_PORT: "5533"
+privileged:
+  - NET_RAW
+ulimits:
+  core: 0
