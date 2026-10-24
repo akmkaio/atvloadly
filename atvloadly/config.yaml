@@ -17,7 +17,7 @@ panel_title: "atvloadly"
 image: ghcr.io/akmkaio/atvloadly-ha
 environment:
   SERVICE_PORT: "5533"
-privileged:
+cap_add:
   - NET_RAW
 ulimits:
   core: 0
