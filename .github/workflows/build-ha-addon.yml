@@ -29,7 +29,7 @@ jobs:
         id: addon
         shell: bash
         run: |
-          VERSION="$(sed -n 's/^version:[[:space:]]*"\\([^"]*\\)".*/\\1/p' atvloadly/config.yaml)"
+          VERSION="$(awk -F '"' '/^version:/ { print $2; exit }' atvloadly/config.yaml)"
           if [ -z "$VERSION" ]; then
             echo "Could not read version from atvloadly/config.yaml" >&2
             exit 1
