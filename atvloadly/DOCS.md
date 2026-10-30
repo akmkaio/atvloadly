@@ -6,7 +6,8 @@ This add-on packages the upstream `ghcr.io/bitxeno/atvloadly:v0.7.4` image for H
 
 - The add-on uses the host network so Apple TV multicast/mDNS discovery can work.
 - It runs a private D-Bus and Avahi daemon inside the container; it does not mount undocumented HAOS host sockets.
-- The web UI is exposed through Home Assistant ingress on port 5533.
+- Avahi discovers available network interfaces automatically. Its configuration disables publishing the add-on's own mDNS records while keeping service browsing enabled; no interface name is hard-coded.
+- The web UI is exposed directly on the Home Assistant host at port 5533 (not through Home Assistant ingress).
 - Because host networking is used and atvloadly has no built-in authentication, the service's port may also be reachable directly on the LAN. Do not forward port 5533 to the public internet. Use a trusted LAN/VLAN and firewall rules as appropriate.
 
 ## Persistent state
