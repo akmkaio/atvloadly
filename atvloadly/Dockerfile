@@ -11,6 +11,10 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
+# Keep automatic interface discovery, but prevent the add-on from publishing
+# its own mDNS records (the service only needs to browse for Apple TV devices).
+COPY avahi-daemon.conf /etc/avahi/avahi-daemon.conf
+
 COPY run.sh /run-atvloadly-ha.sh
 RUN chmod 0755 /run-atvloadly-ha.sh
 
