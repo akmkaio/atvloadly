@@ -14,8 +14,11 @@ if id avahi >/dev/null 2>&1; then
   chown avahi:avahi /run/avahi-daemon
 fi
 
+# The bundled Avahi config keeps automatic interface discovery and browsing,
+# but disables publishing of this container's own mDNS records.
+# Run without --debug to avoid verbose D-Bus diagnostics in normal operation.
 echo "[atvloadly-ha] Starting Avahi for local mDNS discovery..."
-avahi-daemon --no-chroot --debug &
+avahi-daemon --no-chroot &
 AVAHI_PID=$!
 
 for _ in $(seq 1 15); do
