@@ -25,15 +25,27 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      - name: Read add-on version
+      - name: Read add-on version and validate changelog
         id: addon
         shell: bash
         run: |
-          VERSION="$(sed -n 's/^version:[[:space:]]*"\([^"]*\)".*/\1/p' atvloadly/config.yaml)"
+          VERSION="$(sed -n 's/^version:[[:space:]]*"\\([^"]*\\)".*/\\1/p' atvloadly/config.yaml)"
           if [ -z "$VERSION" ]; then
             echo "Could not read version from atvloadly/config.yaml" >&2
             exit 1
           fi
+
+          if [ ! -f atvloadly/CHANGELOG.md ]; then
+            echo "Missing atvloadly/CHANGELOG.md" >&2
+            exit 1
+          fi
+
+          if ! grep -Eq "^##[[:space:]]+${VERSION}([[:space:]]|$)" atvloadly/CHANGELOG.md; then
+            echo "Missing changelog entry for add-on version ${VERSION}" >&2
+            echo "Add a heading such as: ## ${VERSION} - YYYY-MM-DD" >&2
+            exit 1
+          fi
+
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
           echo "Building atvloadly HA add-on version $VERSION"
 
