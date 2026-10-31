@@ -1,6 +1,10 @@
 # atvloadly for Home Assistant OS
 
-This add-on packages the upstream `ghcr.io/bitxeno/atvloadly:v0.7.4` image for Home Assistant OS (amd64), adds Avahi and D-Bus inside the container, and runs the original atvloadly entrypoint.
+This add-on packages the upstream `ghcr.io/bitxeno/atvloadly:v0.8.2` image for Home Assistant OS (amd64), adds Avahi and D-Bus inside the container, and runs the original atvloadly entrypoint.
+
+## Test build
+
+This branch is a prerelease for validating upstream atvloadly v0.8.2. It is intentionally versioned separately from the stable add-on release. Do not merge it into the stable branch until authentication, discovery, installation, and persistent-state tests have passed.
 
 ## Networking and discovery
 
@@ -26,4 +30,4 @@ Use a dedicated Apple Account for sideloading if possible. Protect access to the
 
 ## Upstream version
 
-The wrapper pins upstream atvloadly to `v0.7.4`. To update, change the `FROM ghcr.io/bitxeno/atvloadly:v0.7.4` line in the add-on Dockerfile, increment this add-on's `version` in `config.yaml`, and push the change. The GitHub Actions workflow then builds and publishes the matching image tag.
+The test build pins upstream atvloadly to `v0.8.2`. The stable branch remains on its existing upstream version until this prerelease has been tested and intentionally promoted.
