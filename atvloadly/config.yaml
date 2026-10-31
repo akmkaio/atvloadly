@@ -1,6 +1,6 @@
 name: "atvloadly"
 slug: "atvloadly_ha"
-version: "0.1.1"
+version: "0.1.2-beta.1"
 description: "Sideload and automatically refresh apps on Apple TV"
 url: "https://github.com/akmkaio/atvloadly"
 arch:
