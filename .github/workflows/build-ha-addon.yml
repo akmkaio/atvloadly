@@ -48,6 +48,14 @@ jobs:
           fi
 
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          {
+            echo "tags<<EOF"
+            echo "ghcr.io/akmkaio/atvloadly-ha:$VERSION"
+            if [[ "$GITHUB_REF" == "refs/heads/master" || "$GITHUB_REF" == "refs/heads/main" ]]; then
+              echo "ghcr.io/akmkaio/atvloadly-ha:latest"
+            fi
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
           echo "Building atvloadly HA add-on version $VERSION"
 
       - name: Set up Docker Buildx
@@ -67,9 +75,7 @@ jobs:
           file: atvloadly/Dockerfile
           platforms: linux/amd64
           push: true
-          tags: |
-            ghcr.io/akmkaio/atvloadly-ha:${{ steps.addon.outputs.version }}
-            ${{ (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main') && 'ghcr.io/akmkaio/atvloadly-ha:latest' || '' }}
+          tags: ${{ steps.addon.outputs.tags }}
           labels: |
             org.opencontainers.image.title=atvloadly Home Assistant add-on
             org.opencontainers.image.source=https://github.com/akmkaio/atvloadly
