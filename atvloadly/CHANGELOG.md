@@ -2,6 +2,16 @@
 
 All notable changes to this Home Assistant add-on are documented here.
 
+## 0.1.2-beta.1 - 2026-10-31
+
+### Changed
+- Added a prerelease build based on upstream atvloadly v0.8.2.
+- Kept the Home Assistant wrapper, private D-Bus, Avahi discovery configuration, host networking, and persistent `/data` volume unchanged.
+- Published this test version separately from the stable `latest` image tag.
+
+### Testing
+- Pending validation on Home Assistant OS: startup, Apple TV mDNS discovery, existing pairing data, Apple Account authentication, IPA installation, and persistence after restart.
+
 ## 0.1.1 - 2026-10-30
 
 ### Added
