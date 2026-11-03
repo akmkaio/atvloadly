@@ -6,6 +6,23 @@ This add-on packages the upstream `ghcr.io/bitxeno/atvloadly:v0.8.2` image for H
 
 The stable Home Assistant add-on release is based on upstream atvloadly `v0.8.2`. This version has been validated on Home Assistant OS.
 
+## Disclaimer and transparency
+
+This Home Assistant add-on was created with the assistance of AI tools.
+
+Its purpose is to provide a lightweight packaging of the original [upstream atvloadly project](https://github.com/bitxeno/atvloadly) for Home Assistant OS. It does not aim to replace or independently modify the upstream application beyond the adaptations required to run it as a Home Assistant add-on.
+
+**Please be aware of the following limitations:**
+
+- The add-on code and configuration have not undergone an independent security audit or formal code review.
+- Testing has been performed only on the maintainer's own Home Assistant OS installation and hardware.
+- Compatibility and reliability have not been verified on other Home Assistant installations, hardware configurations, or network environments.
+- Although the add-on has been tested and is working in the maintainer's environment, this does not guarantee that it will work as expected in every setup.
+
+Use it at your own discretion. Always keep backups of your Home Assistant data, especially the add-on's persistent `/data` directory.
+
+This project is community-driven and is provided as-is, without any guarantee of functionality, security, or compatibility.
+
 ## Networking and discovery
 
 - The add-on uses the host network so Apple TV multicast/mDNS discovery can work.
