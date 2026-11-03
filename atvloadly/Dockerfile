@@ -1,5 +1,5 @@
 # Home Assistant add-on wrapper for atvloadly.
-# Test branch: pin the upstream version under evaluation.
+# Pin the validated upstream version; bump deliberately.
 FROM ghcr.io/bitxeno/atvloadly:v0.8.2
 
 USER root
